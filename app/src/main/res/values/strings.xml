@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Project_5_Group_81</string>
+    <string name="ru_pizzeria">RU PIZZERIA</string>
+    <string name="deluxepizza">DeluxePizza</string>
+    <string name="deluxepizza">DeluxePizza</string>
+    <string name="hawaiianpizza">HawaiianPizza</string>
+    <string name="pepperonipizza">PepperoniPizza</string>
+    <string name="current_order">Current Order</string>
+    <string name="store_orders">Store Orders</string>
+</resources>
