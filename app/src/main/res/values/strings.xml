@@ -2,9 +2,17 @@
     <string name="app_name">Project_5_Group_81</string>
     <string name="ru_pizzeria">RU PIZZERIA</string>
     <string name="deluxepizza">DeluxePizza</string>
-    <string name="deluxepizza">DeluxePizza</string>
     <string name="hawaiianpizza">HawaiianPizza</string>
     <string name="pepperonipizza">PepperoniPizza</string>
     <string name="current_order">Current Order</string>
     <string name="store_orders">Store Orders</string>
+    <string name="price">Price:</string>
+    <string name="deluxe_pizza_image">Deluxe Pizza Image</string>
+    <string name="priceValue">0.00$</string>
+    <string name="add_to_order">Add To Order</string>
+    <string name="select_toppings">Select Toppings:</string>
+    <string name="pizza_customization">Pizza Customization</string>
+    <string name="deluxe_pizza">Deluxe Pizza</string>
+    <string name="hawaiian_pizza">Hawaiian Pizza</string>
+    <string name="pepperoni_pizza">Pepperoni Pizza</string>
 </resources>
