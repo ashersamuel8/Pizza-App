@@ -19,15 +19,15 @@ public class PizzaMaker {
         Pizza pizza = null;
 
         switch (flavor) {
-            case "Pepperoni":
+            case "pepperoni":
                 pizza = new Pepperoni();
                 break;
 
-            case "Hawaiian":
+            case "hawaiian":
                 pizza = new Hawaiian();
                 break;
 
-            case "Deluxe":
+            case "deluxe":
                 pizza = new Deluxe();
                 break;
         }

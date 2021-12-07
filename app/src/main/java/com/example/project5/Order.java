@@ -1,5 +1,8 @@
 package com.example.project5;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -9,7 +12,7 @@ import java.util.ArrayList;
  * @author Bhavya Patel
  */
 
-public class Order {
+public class Order implements Serializable {
     private long phoneNumber;
     private ArrayList<Pizza> pizzas;
     private double orderTotal;

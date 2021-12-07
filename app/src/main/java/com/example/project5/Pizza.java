@@ -1,5 +1,6 @@
 package com.example.project5;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -9,9 +10,10 @@ import java.util.ArrayList;
  * @author Bhavya Patel
  */
 
-public abstract class Pizza {
+public abstract class Pizza implements Serializable {
     protected ArrayList<Topping> toppings = new ArrayList<Topping>();
     protected Size size;
+    protected int minToppings;
 
     /**
      * Abstract method that calculates the price, it must be implemented in all subclasses.
@@ -20,16 +22,11 @@ public abstract class Pizza {
     public abstract double price();
 
     /**
-     * Abstract method that returns additional toppings of a pizza
-     */
-    public abstract ArrayList<Topping> getAdditionalToppings();
-
-    /**
      * Method to add a topping to the pizza.
      * @param topping
      */
     public void addTopping(Topping topping) {
-        this.toppings.add(topping);
+        toppings.add(topping);
     }
 
     /**
@@ -40,6 +37,12 @@ public abstract class Pizza {
         this.size = size;
     }
 
+    /**
+     * Method to clear toppings
+     */
+    public void clearToppings(){
+        toppings.clear();
+    }
     /**
      * Method to convert Pizza to String
      * @return String

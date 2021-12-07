@@ -1,5 +1,6 @@
 package com.example.project5;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,11 +11,7 @@ import java.util.List;
  * @author Bhavya Patel
  */
 
-public class Deluxe extends Pizza {
-
-    private Topping[] remainingToppings = {Topping.OLIVES, Topping.PINEAPPLE};
-    private List<Topping> additionalToppingsList = Arrays.asList(remainingToppings);
-    private ArrayList<Topping> additionalToppings =  new ArrayList<>();
+public class Deluxe extends Pizza implements Serializable {
 
     /**
      * This is the default constructor.
@@ -23,9 +20,9 @@ public class Deluxe extends Pizza {
         this.addTopping(Topping.HAM);
         this.addTopping(Topping.TOMATOES);
         this.addTopping(Topping.MUSHROOMS);
-        this.addTopping(Topping.PEPPERONI);
+        this.addTopping(Topping.OLIVES);
         this.addTopping(Topping.SAUSAGE);
-        additionalToppings.addAll(additionalToppingsList);
+        this.minToppings = 5;
     }
 
     /**
@@ -56,12 +53,5 @@ public class Deluxe extends Pizza {
         return price;
     }
 
-    /**
-     * A method to get additional toppings of pepperoni pizza
-     * @return additionalToppings
-     */
-    public ArrayList<Topping> getAdditionalToppings(){
-        return additionalToppings;
-    }
 
 }

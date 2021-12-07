@@ -20,11 +20,11 @@
         app:layout_constraintVertical_bias="0.049" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/deluxeButton"
         android:layout_width="163dp"
         android:layout_height="144dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="96dp"
         android:contentDescription="@string/deluxepizza"
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,10 +33,10 @@
         tools:ignore="ImageContrastCheck" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/hawaiinButton"
         android:layout_width="170dp"
         android:layout_height="144dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="96dp"
         android:layout_marginEnd="16dp"
         android:contentDescription="@string/hawaiianpizza"
         android:scaleType="fitCenter"
@@ -46,7 +46,7 @@
         tools:ignore="ImageContrastCheck" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/pepperoniButton"
         android:layout_width="176dp"
         android:layout_height="125dp"
         android:layout_marginTop="36dp"
@@ -55,25 +55,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        app:layout_constraintTop_toBottomOf="@+id/deluxeButton"
         app:srcCompat="@drawable/pepperoni"
         tools:ignore="ImageContrastCheck" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/currentOrderButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:text="@string/current_order"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/storeOrdersButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/storeOrdersButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="48dp"
         android:text="@string/store_orders"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,9 +86,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/deluxe_pizza"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton"
-        app:layout_constraintStart_toStartOf="@+id/imageButton"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintEnd_toEndOf="@+id/deluxeButton"
+        app:layout_constraintStart_toStartOf="@+id/deluxeButton"
+        app:layout_constraintTop_toBottomOf="@+id/deluxeButton" />
 
     <TextView
         android:id="@+id/textView3"
@@ -96,10 +96,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/hawaiian_pizza"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton2"
+        app:layout_constraintEnd_toEndOf="@+id/hawaiinButton"
         app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="@+id/imageButton2"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
+        app:layout_constraintStart_toStartOf="@+id/hawaiinButton"
+        app:layout_constraintTop_toBottomOf="@+id/hawaiinButton" />
 
     <TextView
         android:id="@+id/textView4"
@@ -107,8 +107,38 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="@string/pepperoni_pizza"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton3"
-        app:layout_constraintStart_toStartOf="@+id/imageButton3"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
+        app:layout_constraintEnd_toEndOf="@+id/pepperoniButton"
+        app:layout_constraintStart_toStartOf="@+id/pepperoniButton"
+        app:layout_constraintTop_toBottomOf="@+id/pepperoniButton" />
+
+    <TextView
+        android:id="@+id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:labelFor="@id/editTextNumber"
+        android:text="@string/phone_number"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:focusable="true"
+        android:importantForAutofill="no"
+        android:inputType="number|phone"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintStart_toEndOf="@+id/phoneNumber"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

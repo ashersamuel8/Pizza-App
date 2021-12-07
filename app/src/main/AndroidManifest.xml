@@ -18,6 +18,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PizzaCustomizationActivity"
+            android:label="Pizza Customization"
+            android:parentActivityName=".MainActivity">
+        </activity>
+        <activity
+            android:name=".CurrentOrderActivity"
+            android:label="Current Order"
+            android:parentActivityName=".MainActivity">
+        </activity>
+        <activity
+            android:name=".StoreOrdersActivity"
+            android:label="Store Orders"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>
