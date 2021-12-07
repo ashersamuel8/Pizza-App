@@ -2,11 +2,8 @@ package com.example.project5;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,49 +13,41 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.Serializable;
-import java.security.ProtectionDomain;
 import java.text.DecimalFormat;
 
 
 public class PizzaCustomizationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
 
-    protected ImageView pizzaImage;
-    protected TextView pizzaLabel;
-    protected Spinner sizeSpinner;
-    protected ListView toppingsListView;
-    protected TextView price;
-    protected Order order;
-    protected Pizza pizza;
-    protected Button addToOrderButton;
-    Size[] sizes = {Size.SMALL, Size.MEDIUM, Size.LARGE};
-    ArrayAdapter<Size> sizeArrayAdapter;
-    Topping[] toppingsArray = {Topping.PEPPERONI, Topping.HAM, Topping.SAUSAGE, Topping.TOMATOES, Topping.OLIVES, Topping.MUSHROOMS, Topping.PINEAPPLE};
-    ArrayAdapter<Topping> toppingArrayAdapter;
-    DecimalFormat decimalFormat = new DecimalFormat();
+    private ImageView pizzaImage;
+    private TextView pizzaLabel;
+    private Spinner sizeSpinner;
+    private ListView toppingsListView;
+    private TextView price;
+    private Order order;
+    private Pizza pizza;
+    private Button addToOrderButton;
+    private final Size[] sizes = {Size.SMALL, Size.MEDIUM, Size.LARGE};
+    private ArrayAdapter<Size> sizeArrayAdapter;
+    private final Topping[] toppingsArray = {Topping.PEPPERONI, Topping.HAM, Topping.SAUSAGE, Topping.TOMATOES, Topping.OLIVES, Topping.MUSHROOMS, Topping.PINEAPPLE};
+    private ArrayAdapter<Topping> toppingArrayAdapter;
+    private final DecimalFormat decimalFormat = new DecimalFormat();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pizza_customization_layout);
-        Intent intent = getIntent();
-        String pizzaType = intent.getStringExtra("pizzaType");
-//        orderID = intent.getStringExtra("phoneNumber");
-        sizeSpinner = (Spinner) findViewById(R.id.sizeSpinner);
-        pizzaImage = (ImageView) findViewById(R.id.pizzaImage);
-        price = (TextView) findViewById(R.id.price);
-        pizzaLabel = (TextView) findViewById(R.id.pizzaLabel);
-        toppingsListView = (ListView) findViewById(R.id.toppingsList);
+        sizeSpinner = findViewById(R.id.sizeSpinner);
+        pizzaImage = findViewById(R.id.pizzaImage);
+        price = findViewById(R.id.price);
+        pizzaLabel = findViewById(R.id.pizzaLabel);
+        toppingsListView = findViewById(R.id.toppingsList);
         sizeArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sizes);
-        toppingArrayAdapter = new ArrayAdapter<Topping>(this, android.R.layout.simple_list_item_multiple_choice, toppingsArray);
+        toppingArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, toppingsArray);
         decimalFormat.setMaximumFractionDigits(2);
-        addToOrderButton = (Button) findViewById(R.id.addToOrderButton);
+        addToOrderButton = findViewById(R.id.addToOrderButton);
     }
 
     @SuppressLint({"SetTextI18n"})
@@ -75,7 +64,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         toppingsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         pizza = PizzaMaker.createPizza(pizzaType);
         pizza.setSize(Size.SMALL);
-        price.setText(String.valueOf(decimalFormat.format(pizza.price())) + "$");
+        price.setText(decimalFormat.format(pizza.price()) + "$");
         sizeSpinner.setOnItemSelectedListener(this);
         toppingsListView.setOnItemClickListener(this);
         switch(pizzaType){
@@ -97,12 +86,9 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
                 break;
         }
         order = (Order) intent.getSerializableExtra("order");
-        addToOrderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                order.addPizza(pizza);
-                goHome();
-            }
+        addToOrderButton.setOnClickListener(view -> {
+            order.addPizza(pizza);
+            goHome();
         });
 
     }
@@ -113,7 +99,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
 
         Size size = (Size) parent.getItemAtPosition(position);
         pizza.setSize(size);
-        price.setText(String.valueOf(decimalFormat.format(pizza.price())) + "$");
+        price.setText(decimalFormat.format(pizza.price()) + "$");
     }
 
     @Override
@@ -124,14 +110,14 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch(item.getItemId()){
-            case android.R.id.home:
-               goHome();
-               return true;
+        if (item.getItemId() == android.R.id.home) {
+            goHome();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Topping topping = (Topping) parent.getItemAtPosition(position);
@@ -142,7 +128,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
             pizza.toppings.add(topping);
         }
 
-        price.setText(String.valueOf(decimalFormat.format(pizza.price())) + "$");
+        price.setText(decimalFormat.format(pizza.price()) + "$");
 
         if(pizza.toppings.size() < pizza.minToppings){
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
@@ -152,11 +138,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
 
             alertBuilder.setPositiveButton(
                     "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
+                    (dialog, id1) -> dialog.cancel());
 
             AlertDialog warning = alertBuilder.create();
             warning.show();
@@ -165,7 +147,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
 
     private void goHome(){
         Intent goHomeIntent = new Intent(this, MainActivity.class);
-        goHomeIntent.putExtra("order", (Serializable) order);
+        goHomeIntent.putExtra("order", order);
         startActivity(goHomeIntent);
         super.finish();
     }

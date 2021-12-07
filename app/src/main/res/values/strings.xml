@@ -33,5 +33,6 @@
     <string name="subtotal">subtotal</string>
     <string name="sub_total">Sub-Total:</string>
     <string name="total_">total</string>
+    <string name="remove_pizza">Remove Pizza</string>
 
 </resources>

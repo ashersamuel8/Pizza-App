@@ -38,12 +38,6 @@ public abstract class Pizza implements Serializable {
     }
 
     /**
-     * Method to clear toppings
-     */
-    public void clearToppings(){
-        toppings.clear();
-    }
-    /**
      * Method to convert Pizza to String
      * @return String
      */

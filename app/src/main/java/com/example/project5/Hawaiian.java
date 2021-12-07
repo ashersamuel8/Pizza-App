@@ -1,9 +1,6 @@
 package com.example.project5;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * This class defines a Hawaiian pizza.

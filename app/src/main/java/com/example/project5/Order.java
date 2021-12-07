@@ -1,7 +1,5 @@
 package com.example.project5;
 
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -33,13 +31,6 @@ public class Order implements Serializable {
     }
 
     /**
-     * Method to remove a pizza from an order.
-     */
-    public void removePizza(Pizza pizza){
-        this.pizzas.remove(pizza);
-    }
-
-    /**
      * Method to get order (phone) number
      */
     public long getPhoneNumber(){
@@ -65,13 +56,6 @@ public class Order implements Serializable {
      */
     public void setOrderTotal(double total){
         this.orderTotal = total;
-    }
-
-    /**
-     * Method to get order total
-     */
-    public double getOrderTotal(){
-        return this.orderTotal;
     }
 
     /**

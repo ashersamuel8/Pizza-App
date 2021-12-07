@@ -5,37 +5,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CurrentOrderActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
-    protected TextView orderNumberText;
-    protected TextView subtotalText;
-    protected TextView taxText;
-    protected TextView totalText;
-    protected Button placeOrderButton;
-    protected Button removePizzaButton;
-    protected ListView pizzaList;
-    protected double subtotal;
-    protected double tax;
-    protected double total;
-    protected Order order;
-    protected ArrayAdapter<Pizza> pizzaArrayAdapter;
-    protected ArrayList<Pizza> removePizzas;
-    protected DecimalFormat decimalFormat = new DecimalFormat();
+    private TextView orderNumberText;
+    private TextView subtotalText;
+    private TextView taxText;
+    private TextView totalText;
+    private Button placeOrderButton;
+    private Button removePizzaButton;
+    private ListView pizzaList;
+    private double subtotal;
+    private Order order;
+    private ArrayAdapter<Pizza> pizzaArrayAdapter;
+    private final DecimalFormat decimalFormat = new DecimalFormat();
+    private Pizza removePizza;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,51 +52,51 @@ public class CurrentOrderActivity extends AppCompatActivity implements AdapterVi
     protected void onStart() {
         super.onStart();
         order = (Order) getIntent().getSerializableExtra("order");
-//        System.out.println(order);
         orderNumberText.setText(String.valueOf(order.getPhoneNumber()));
-        pizzaArrayAdapter = new ArrayAdapter<Pizza>(this, android.R.layout.simple_list_item_multiple_choice, order.getPizzas());
+        pizzaArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, order.getPizzas());
         pizzaList.setAdapter(pizzaArrayAdapter);
-        pizzaList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        pizzaList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         pizzaList.setOnItemClickListener(this);
-        removePizzas = new ArrayList<>();
         Iterator<Pizza> iterator = order.getPizzas().iterator();
         while(iterator.hasNext()){
             Pizza buffPizza = iterator.next();
             subtotal += buffPizza.price();
         }
-        tax = 0.06625 * subtotal;
-        total = tax + subtotal;
+        double tax = 0.06625 * subtotal;
+        double total = tax + subtotal;
         order.setOrderTotal(total);
 
         subtotalText.setText(decimalFormat.format(subtotal) + "$");
         taxText.setText(decimalFormat.format(tax) + "$");
         totalText.setText(decimalFormat.format(total) + "$");
 
-        removePizzaButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Iterator<Pizza> iterator = removePizzas.iterator();
-                while(iterator.hasNext()){
-                    Pizza pizza = iterator.next();
-                    order.getPizzas().remove(pizza);
-                }
-                removePizzas = new ArrayList<>();
-                pizzaArrayAdapter.notifyDataSetChanged();
-                pizzaList.setAdapter(pizzaArrayAdapter);
-
+        removePizzaButton.setOnClickListener(view -> {
+            if(removePizza == null){
+                CharSequence text = "Select Pizzas to Remove";
+                Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+                toast.show();
+                return;
             }
+            order.getPizzas().remove(removePizza);
+            removePizza = null;
+            pizzaArrayAdapter.notifyDataSetChanged();
+            pizzaList.setAdapter(pizzaArrayAdapter);
+
         });
 
-        placeOrderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.addOrderToStoreOrders(order);
-                CharSequence text = "Order Placed";
-                Toast toast = Toast.makeText(getApplicationContext(), text,Toast.LENGTH_SHORT);
+        placeOrderButton.setOnClickListener(view -> {
+            if(order.getPizzas().size() == 0){
+                CharSequence text = "Empty orders cant be placed";
+                Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
                 toast.show();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                return;
             }
+            MainActivity.addOrderToStoreOrders(order);
+            CharSequence text = "Order Placed";
+            Toast toast = Toast.makeText(getApplicationContext(), text,Toast.LENGTH_SHORT);
+            toast.show();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         });
 
     }
@@ -118,12 +114,11 @@ public class CurrentOrderActivity extends AppCompatActivity implements AdapterVi
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Pizza buffPizza = (Pizza) parent.getItemAtPosition(position);
-        if(removePizzas.contains(buffPizza)){
-            removePizzas.remove(buffPizza);
-        }
-        else removePizzas.add(buffPizza);
+        removePizza = (Pizza) parent.getItemAtPosition(position);
+        pizzaList.setSelector(android.R.color.darker_gray);
+
     }
 }

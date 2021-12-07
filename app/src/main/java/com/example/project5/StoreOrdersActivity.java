@@ -11,27 +11,25 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class StoreOrdersActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    protected Spinner orderSpinner;
-    protected ListView pizzaList;
-    protected Button goBackButton;
-    protected ArrayAdapter<Long> orderIDs;
-    protected ArrayAdapter<Pizza> pizzaArrayAdapter;
-    protected Button removeOrderButton;
-    protected TextView subtotalText;
-    protected TextView totalText;
-    protected TextView taxText;
-    protected DecimalFormat decimalFormat = new DecimalFormat();
-    protected Order order;
+    private Spinner orderSpinner;
+    private ListView pizzaList;
+    private Button goBackButton;
+    private Button removeOrderButton;
+    private TextView subtotalText;
+    private TextView totalText;
+    private TextView taxText;
+    private final DecimalFormat decimalFormat = new DecimalFormat();
+    private Order order;
 
 
     @Override
@@ -56,39 +54,39 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
             orderNumbers.add(buffOrder.getPhoneNumber());
         }
 
-        orderIDs = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, orderNumbers);
+        ArrayAdapter<Long> orderIDs = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, orderNumbers);
         orderSpinner.setAdapter(orderIDs);
         orderSpinner.setOnItemSelectedListener(this);
-        removeOrderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        removeOrderButton.setOnClickListener(view -> {
+            CharSequence text;
+            if(order != null) {
                 MainActivity.storeOrders.getOrders().remove(order);
                 finish();
                 startActivity(getIntent());
+                text = "Order Removed";
             }
+            else{
+                text = "No Orders to Remove";
+            }
+            Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+            toast.show();
         });
 
-        goBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        goBackButton.setOnClickListener(view -> finish());
 
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//        Long orderID = (Long) parent.getItemAtPosition(position);
-        pizzaArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
-                                    MainActivity.storeOrders.getOrders().get(position).getPizzas());
+        ArrayAdapter<Pizza> pizzaArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                MainActivity.storeOrders.getOrders().get(position).getPizzas());
         pizzaList.setAdapter(pizzaArrayAdapter);
         order = MainActivity.storeOrders.getOrders().get(position);
         Iterator<Pizza> iterator = MainActivity.storeOrders.getOrders().get(position).getPizzas().iterator();
         double subtotal = 0.00;
-        double tax = 0.00;
-        double total = 0.00;
+        double tax;
+        double total;
         while(iterator.hasNext()){
             Pizza buffPizza = iterator.next();
             subtotal += buffPizza.price();
@@ -105,18 +103,16 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch(item.getItemId()){
-            case android.R.id.home:
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra("order", order);
-                startActivity(intent);
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        super.finish();
     }
 }

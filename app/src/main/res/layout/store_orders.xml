@@ -88,12 +88,11 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
         android:text="@string/sub_total"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pizzaList" />
+        app:layout_constraintTop_toTopOf="@+id/removeOrderButton" />
 
     <TextView
         android:id="@+id/textView9"
@@ -123,19 +122,16 @@
         android:id="@+id/subtotalText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="@string/subtotal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.113"
         app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/pizzaList" />
+        app:layout_constraintTop_toTopOf="@+id/removeOrderButton" />
 
     <TextView
         android:id="@+id/taxText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/tax_"
         app:layout_constraintEnd_toEndOf="@+id/subtotalText"
         app:layout_constraintHorizontal_bias="0.343"
         app:layout_constraintStart_toStartOf="@+id/subtotalText"
@@ -146,7 +142,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
-        android:text="@string/total_"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/taxText"
         app:layout_constraintHorizontal_bias="1.0"
